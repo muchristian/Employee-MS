@@ -20,18 +20,6 @@ This API uses Sequelize as its ORM. To get you started, we will configure sequel
 
 The .sequelizerc file will in turn be used by sequelize-cli to setup the the sequelize folder structure.
 
-### 1. Configure environment variables
-
-The following are example environment variables needed:
-
-#### Database
-
-* DEV_DB_USERNAME
-* DEV_DB_PASSWORD
-* DEV_DB_NAME
-* DEV_DB_HOSTNAME
-* DEV_DB_PORT
-
 #### General
 
 * NODE_ENV=development
@@ -67,22 +55,3 @@ You can revert back to initial state by undoing all migrations with `db:migrate:
 `$ npx sequelize-cli db:migrate:undo:all --to XXXXXXXXXXXXXX-create-user.js`
 
 Refer to the [sequelize](https://sequelize.org/v5/) and [sequelize-cli](https://github.com/sequelize/cli/tree/master/docs) docs for more information.
-
-## Endpoints Specifications
-
-| Endpoint | Request | Status | Description |
-| --- | --- | --- | --- |
-| / | GET | 200 OK | Helps users to access to the parent api for the whole application|
-| /api/auth/signup | POST | 201 CREATED | Makes a post request to signup a new user and return access token |
-| /api/auth/login | POST | 200 OK | Makes a post request to login an existing user and return an access token |
-| /api/auth/resetpassword | POST | 200 OK | Makes a post request, for for requesting to reset a password by sending the user's email and it returns a token to send with the next route of resetting password |
-| /api/auth/resetpassord/:token | POST | 200 OK | Makes a POST request reset user's password |
-| /api/profile | GET | 200 OK | Makes a GET request, to help a logged-in user to see his profile after successful login |
-| /api/profile/:username | GET | 200 OK | Makes a GET request to help a user to see other users' profiles by adding their usernames in URL |
-| /api/profile | PATCH | 200 OK | Makes a PATCH request when a user wants to update his profile |
-| /api/profile/password | PATCH | 200 OK | Makes a PATCH request to help password changes, whenever a user needs to change his/her password directly from his/her profile|
-| /api/auth/verify?token=eyWWWSDHFGC | GET | 200 OK | Makes a GET request when a user clicks on the link that is sent to him/her via Email to verify his/her email |
-| /api/trips/inapp/notification | GET | 200 OK | It shows the inApp notifications to manager and requester |
-| api/auth/disable?mode=inapp | PATCH | 200 OK | It enables/disables inApp notifications |
-| api/auth/disable?mode=email | PATCH | 200 OK | It enables/disables email notifications |
-| ||More Details about all of the above endpoints, their responses form, and when there is an error how they respond, please click here for further documentation [Documentation](https://stackup2-barefoot-backend-stag.herokuapp.com/public/api-docs/#/) ||
