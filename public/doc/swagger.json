@@ -1,0 +1,494 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Todo crud Project",
+    "description": "Would help in management with the basic operations(crud)",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "host": "localhost:3002",
+  "basePath": "/api",
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/auth/signup": {
+      "post": {
+        "summary": "create an account",
+        "tags": [
+          "Sign up"
+        ],
+        "description": "User sign up endpoint",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "User information",
+            "in": "body",
+            "description": "User information required for sign up",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/signup"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/responses/signupSuccess"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/responses/signupFail"
+            }
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "summary": "User Login",
+        "tags": [
+          "User Login"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "format": "email",
+            "description": "Email for securing user's account"
+          },
+          {
+            "name": "password",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "format": "password",
+            "description": "Password for authentication"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "This is how the response looks like when login is successful",
+            "schema": {
+              "$ref": "#/login-definition/login-response-real-data"
+            }
+          },
+          "400": {
+            "description": "This is how the response looks like when a user sends empty email, or empty password or both empty",
+            "schema": {
+              "$ref": "#/login-definition/login-response-empty-data"
+            }
+          },
+          "401": {
+            "description": "This is how the response looks like when a user sends wrong email or password",
+            "schema": {
+              "$ref": "#/login-definition/login-response-wrong-data"
+            }
+          }
+        }
+      }
+    },
+
+    "/auth/resetpassword": {
+      "post": {
+        "summary": "Reset email",
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "User email",
+            "in": "body",
+            "description": "email for a user ",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/resetEmail"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "This is how the response looks like when user exist and an email is successful sent",
+            "schema": {
+              "$ref": "#/responses/reset-password-email-success"
+            }
+          },
+          "403": {
+            "description": "This is how the response looks like when a user does not exist",
+            "schema": {
+              "$ref": "#/responses/reset-password-email-fail"
+            }
+          }
+        }
+      }
+    },
+    "/auth/resetpassord/:token": {
+      "post": {
+        "summary": "update password",
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "User password",
+            "in": "body",
+            "description": "the new password ",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/updatePassword"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "This is the response when password is updated",
+            "schema": {
+              "$ref": "#/responses/update-password-success"
+            }
+          }
+        }
+      }
+    },
+    "/todo/create": {
+      "post": {
+        "summary": "create a todo item",
+        "description": "Todo item insert endpoint",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Todo information",
+            "in": "body",
+            "description": "Todo information required for creation",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/createtodo"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Todo created",
+            "schema": {
+              "$ref": "#/responses/create-todo-success"
+            }
+          }
+        }
+      }
+    },
+    "/todo/all": {
+      "get": {
+        "summary": "get all todo items",
+        "description": "Get all todo items endpoint",
+        "responses": {
+          "200": {
+            "description": "Get all todo items",
+            "schema": {
+              "$ref": "#/responses/getalltodoSuccess"
+            }
+          }
+        }
+      }
+    },
+    "/todo/:id": {
+      "get": {
+        "summary": "get todo item",
+        "description": "Get todo item endpoint",
+        "responses": {
+          "200": {
+            "description": "Get todo item",
+            "schema": {
+              "$ref": "#/responses/gettodoSuccess"
+            }
+          }
+        }
+      }
+    },
+    "/todo/update/:id": {
+      "put": {
+        "summary": "update todo item",
+        "description": "update todo item endpoint",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Todo information",
+            "in": "body",
+            "description": "Todo information required for update",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/updatetodo"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Update todo item",
+            "schema": {
+              "$ref": "#/responses/updatetodoSuccess"
+            }
+          }
+        }
+      }
+    },
+    "/todo/delete/:id": {
+      "delete": {
+        "summary": "delete todo item",
+        "description": "Delete todo item endpoint",
+        "responses": {
+          "200": {
+            "description": "Delete todo item",
+            "schema": {
+              "$ref": "#/responses/deletetodoSuccess"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "signup": {
+      "properties": {
+        "firstName": {
+          "type": "string",
+          "required": true,
+          "example": "John"
+        },
+        "lastName": {
+          "type": "string",
+          "required": true,
+          "example": "Doe"
+        },
+        "email": {
+          "type": "string",
+          "required": true,
+          "example": "john@doe.com"
+        },
+        "phoneNumber": {
+          "type": "string",
+          "required": true,
+          "example": "0758940334"
+        },
+        "password": {
+          "type": "string",
+          "required": true,
+          "example": "Pass@word23"
+        },
+        "address": {
+          "type": "string",
+          "required": true,
+          "example": "Kigali"
+        }
+      }
+    },
+    "resetEmail": {
+      "email": {
+        "type": "string",
+        "required": true,
+        "example": "john@doe.com"
+      }
+    },
+    "updatePassword": {
+      "password": {
+        "type": "string",
+        "required": true,
+        "example": "didiny"
+      }
+    },
+    "createtodo": {
+      "properties": {
+      "title": {
+        "type": "string",
+        "required": true,
+        "example": "design"
+      },
+      "description": {
+        "type": "string",
+        "example": "design description"
+      },
+      "priority": {
+        "type": "string",
+        "required": true,
+        "example": "MEDIUM"
+      }
+    }
+    },
+    "updatetodo": {
+      "properties": {
+      "title": {
+        "type": "string",
+        "required": true,
+        "example": "erd"
+      },
+      "description": {
+        "type": "string",
+        "example": "erd description"
+      },
+      "priority": {
+        "type": "string",
+        "required": true,
+        "example": "MEDIUM"
+      }
+    }
+    }
+  },
+  "responses": {
+    "signupSuccess": {
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Account created successfully"
+        },
+        "token": {
+          "type": "string",
+          "example": "eyJhbGciOiJIUzI1NiIsInR....."
+        }
+      }
+    },
+    "signupFail": {
+      "properties": {
+        "error": {
+          "type": "string",
+          "example": "Sign up failed! Please try again later"
+        }
+      }
+    },
+    "reset-password-email-success": {
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "The email has sent successful"
+        }
+      }
+    },
+    "reset-password-email-fail": {
+      "properties": {
+        "error": {
+          "type": "string",
+          "example": "User does not exist"
+        }
+      }
+    },
+    "update-password-success": {
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Your password has been changed, login with new password"
+        }
+      }
+    },
+    "login-definition": {
+      "login-response-real-data": {
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "successfully logged in"
+          },
+          "token": {
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+          }
+        }
+      },
+      "login-response-wrong-data": {
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "unknown credentials"
+          }
+        }
+      },
+      "login-response-empty-data": {
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "enter your email or password"
+          }
+        }
+      }
+    },
+      "create-todo-success": {
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Todo item created successfully"
+          }
+        }
+      },
+      "getalltodoSuccess": {
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "All Todo items returned successfully"
+          },
+          "data": {
+            "type": "object",
+            "example": {}
+          }
+        }
+      },
+      "gettodoSuccess": {
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "A Todo item returned successfully"
+          },
+          "data": {
+            "type": "object",
+            "example": {}
+          }
+        }
+      },
+      "updatetodoSuccess": {
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Todo item updated successfully"
+          },
+          "data": {
+            "type": "object",
+            "example": {}
+          }
+        }
+      },
+      "deletetodoSuccess": {
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Todo item deleted successfully"
+          }
+        }
+      }
+    
+  }
+}

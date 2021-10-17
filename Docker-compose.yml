@@ -1,0 +1,27 @@
+version: "3"
+services:
+  app:
+    build: .
+    depends_on:
+      - postgres
+    ports:
+      - "9229:9229"
+
+  redis:
+    image: redis
+    container_name: cache
+    expose:
+      - 6379
+
+  postgres:
+    image: 'postgres'
+    environment:
+      NODE_ENV: "test"
+      PORT: 3002
+      JWT_KEY: "jwtkedeliverapp"
+      JWT_EXP: "24h"
+      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_USER: "postgres"
+      POSTGRES_DB: "employeems"
+      DB_HOST: 127.0.0.1
+      SENDGRID_API_KEY: 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
