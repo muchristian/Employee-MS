@@ -7,10 +7,10 @@ jobs:
   build:
     environment:
       NODE_ENV: test
-  database:
-    override:
-    - echo psql -c "create database employeems_test;" -U postgres
-   steps:
+    database:
+      override:
+        - echo psql -c "create database employeems_test;" -U postgres
+    steps:
       - checkout
       - run: npm install
       # - run: npm test
