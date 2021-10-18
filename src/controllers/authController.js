@@ -35,7 +35,6 @@ export default class authController {
     const {id} = decodeToken(token, process.env.JWT_KEY);
     const result = await UserServices.updateBy({confirmed: true}, {id})
     return successResponse(res, ok, confirmationsuccess, result, undefined)
-  
   }
 
   static async login(req, res) {

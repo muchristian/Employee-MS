@@ -1,11 +1,9 @@
-import sendGridMail from '@sendgrid/mail';
 import * as response from '../response';
 import statusCodes from '../statusCodes';
 import * as messages from '../customMessages';
-require('dotenv').config();
+import transport from './config';
 
 const { resetsuccess } = messages
-sendGridMail.setApiKey(process.env.SENDGRID_API_KEY);
 const {successResponse, errorResponse} = response;
 
 function userResetPasswordEmailHtml(userName, url) {
@@ -22,13 +20,13 @@ function getMessage(emailParams, url) {
 }
 
 async function sendUserResetPasswordEmail(res, result, url, token) {
-  try {
-      console.log(result)
-    await sendGridMail.send(getMessage(result, url));
-    successResponse(res, statusCodes.ok, resetsuccess, result, token);
-  } catch (error) {
-    return errorResponse(res, statusCodes.badRequest, error);
-  }
+  transport.sendMail(getMessage(result, url), function(err, info) {
+    if (err) {
+      console.log(err)
+    } else {
+      return successResponse(res, statusCodes.ok, resetsuccess, result, token);
+    }
+  })
 }
 
 export default sendUserResetPasswordEmail;

@@ -2,8 +2,8 @@
   "swagger": "2.0",
   "info": {
     "version": "1.0.0",
-    "title": "Todo crud Project",
-    "description": "Would help in management with the basic operations(crud)",
+    "title": "Barefoot Nomad API Documentation",
+    "description": "Make company global travel and accommodation easy and convenient for the strong workforce of savvy members of staff, by leveraging the modern web.",
     "license": {
       "name": "MIT",
       "url": "https://opensource.org/licenses/MIT"
@@ -58,11 +58,33 @@
         }
       }
     },
+    "/auth/confirmation/:token": {
+      "get": {
+        "summary": "Confirm",
+        "tags": [
+          "Confirm"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200",
+            "schema": {
+              "$ref": "#/responses/confirm"
+            }
+          }
+        }
+      }
+    },
     "/auth/login": {
       "post": {
         "summary": "User Login",
         "tags": [
-          "User Login"
+          "Authentication"
         ],
         "produces": [
           "application/json"
@@ -92,28 +114,30 @@
           "200": {
             "description": "This is how the response looks like when login is successful",
             "schema": {
-              "$ref": "#/login-definition/login-response-real-data"
+              "$ref": "#/responses/login-response-real-data"
             }
           },
           "400": {
             "description": "This is how the response looks like when a user sends empty email, or empty password or both empty",
             "schema": {
-              "$ref": "#/login-definition/login-response-empty-data"
+              "$ref": "#/responses/login-response-empty-data"
             }
           },
           "401": {
             "description": "This is how the response looks like when a user sends wrong email or password",
             "schema": {
-              "$ref": "#/login-definition/login-response-wrong-data"
+              "$ref": "#/responses/login-response-wrong-data"
             }
           }
         }
       }
     },
-
-    "/auth/resetpassword": {
+    "/auth/reset": {
       "post": {
         "summary": "Reset email",
+        "tags": [
+          "Authentication"
+        ],
         "produces": [
           "application/json"
         ],
@@ -147,9 +171,12 @@
         }
       }
     },
-    "/auth/resetpassord/:token": {
-      "post": {
+    "/auth/update-passord/:token": {
+      "put": {
         "summary": "update password",
+        "tags": [
+          "Authentication"
+        ],
         "produces": [
           "application/json"
         ],
@@ -177,99 +204,338 @@
         }
       }
     },
-    "/todo/create": {
-      "post": {
-        "summary": "create a todo item",
-        "description": "Todo item insert endpoint",
+    "/auth/update-profile": {
+      "put": {
+        "summary": "Update profile",
+        "tags": [
+          "Authentication"
+        ],
         "produces": [
+          "application/json"
+        ],
+        "consumes": [
           "application/json"
         ],
         "parameters": [
           {
-            "name": "Todo information",
+            "name": "User information",
             "in": "body",
-            "description": "Todo information required for creation",
+            "description": "User information required for sign up",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/createtodo"
+              "$ref": "#/definitions/updateProfile"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200",
+            "schema": {
+              "$ref": "#/responses/profileUpdate"
+            }
+          }
+        }
+      }
+    },
+    "/employee/create": {
+      "post": {
+        "summary": "create employee",
+        "tags": [
+          "Employee"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "User information",
+            "in": "body",
+            "description": "User information required for sign up",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/createEmployee"
             }
           }
         ],
         "responses": {
           "201": {
-            "description": "Todo created",
+            "description": "201",
             "schema": {
-              "$ref": "#/responses/create-todo-success"
+              "$ref": "#/responses/employeeCreateSuccess"
             }
           }
         }
       }
     },
-    "/todo/all": {
-      "get": {
-        "summary": "get all todo items",
-        "description": "Get all todo items endpoint",
-        "responses": {
-          "200": {
-            "description": "Get all todo items",
-            "schema": {
-              "$ref": "#/responses/getalltodoSuccess"
-            }
-          }
-        }
-      }
-    },
-    "/todo/:id": {
-      "get": {
-        "summary": "get todo item",
-        "description": "Get todo item endpoint",
-        "responses": {
-          "200": {
-            "description": "Get todo item",
-            "schema": {
-              "$ref": "#/responses/gettodoSuccess"
-            }
-          }
-        }
-      }
-    },
-    "/todo/update/:id": {
-      "put": {
-        "summary": "update todo item",
-        "description": "update todo item endpoint",
+    "/employee/upload-data": {
+      "post": {
+        "summary": "upload employee's data",
+        "tags": [
+          "Employee"
+        ],
         "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "file",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "format": "binary",
+            "description": "Excel file containing employee's data"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "201",
+            "schema": {
+              "$ref": "#/responses/employeeCreateSuccess"
+            }
+          }
+        }
+      }
+    },
+    "/employee/": {
+      "get": {
+        "summary": "get employees",
+        "tags": [
+          "Employee"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200",
+            "schema": {
+              "$ref": "#/responses/employeesreturnsuccess"
+            }
+          }
+        }
+      }
+    },
+    "/employee/search": {
+      "get": {
+        "summary": "get searched employee",
+        "tags": [
+          "Employee"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
           "application/json"
         ],
         "parameters": [
           {
-            "name": "Todo information",
-            "in": "body",
-            "description": "Todo information required for update",
-            "required": true,
+            "name": "position",
+            "in": "query",
+            "description": "position",
             "schema": {
-              "$ref": "#/definitions/updatetodo"
+              "position": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "name",
+            "schema": {
+              "name": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "email",
+            "in": "query",
+            "description": "email",
+            "schema": {
+              "email": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "code",
+            "in": "query",
+            "description": "code",
+            "schema": {
+              "code": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "phoneNumber",
+            "in": "query",
+            "description": "phoneNumber",
+            "schema": {
+              "phoneNumber": {
+                "type": "string"
+              }
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "Update todo item",
+            "description": "200",
             "schema": {
-              "$ref": "#/responses/updatetodoSuccess"
+              "$ref": "#/responses/employeeSearchreturnSuccess"
             }
           }
         }
       }
     },
-    "/todo/delete/:id": {
-      "delete": {
-        "summary": "delete todo item",
-        "description": "Delete todo item endpoint",
+    "/employee/:id": {
+      "get": {
+        "summary": "get employee by id",
+        "tags": [
+          "Employee"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
         "responses": {
           "200": {
-            "description": "Delete todo item",
+            "description": "200",
             "schema": {
-              "$ref": "#/responses/deletetodoSuccess"
+              "$ref": "#/responses/employeereturnSuccess"
+            }
+          }
+        }
+      }
+    },
+    "/employee/:id/edit": {
+      "put": {
+        "summary": "edit employee",
+        "tags": [
+          "Employee"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "User information",
+            "in": "body",
+            "description": "User information required for sign up",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/updateEmployee"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200",
+            "schema": {
+              "$ref": "#/responses/employeeUpdateSuccess"
+            }
+          }
+        }
+      }
+    },
+    "/employee/:id/suspend": {
+      "put": {
+        "summary": "suspend employee",
+        "tags": [
+          "Employee"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "User information",
+            "in": "body",
+            "description": "User information required for sign up",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/suspend"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200",
+            "schema": {
+              "$ref": "#/responses/employeeUpdateSuccess"
+            }
+          }
+        }
+      }
+    },
+    "/employee/:id/activate": {
+      "put": {
+        "summary": "activate employee",
+        "tags": [
+          "Employee"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "User information",
+            "in": "body",
+            "description": "User information required for sign up",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/activateStatus"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200",
+            "schema": {
+              "$ref": "#/responses/employeeUpdateSuccess"
+            }
+          }
+        }
+      }
+    },
+    "/employee/:id/delete": {
+      "delete": {
+        "summary": "delete employee",
+        "tags": [
+          "Employee"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200",
+            "schema": {
+              "$ref": "#/responses/employeeDeleteSuccess"
             }
           }
         }
@@ -297,17 +563,21 @@
         "phoneNumber": {
           "type": "string",
           "required": true,
-          "example": "0758940334"
+          "example": "+250789437820"
         },
         "password": {
           "type": "string",
           "required": true,
-          "example": "Pass@word23"
-        },
-        "address": {
+          "example": "Password@32"
+        }
+      }
+    },
+    "userProfileHeaders": {
+      "properties": {
+        "toke": {
           "type": "string",
           "required": true,
-          "example": "Kigali"
+          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
         }
       }
     },
@@ -323,43 +593,190 @@
         "type": "string",
         "required": true,
         "example": "didiny"
+      },
+      "password_confirmation": {
+        "type": "string",
+        "required": true,
+        "example": "didiny"
       }
     },
-    "createtodo": {
+    "updateProfile": {
       "properties": {
-      "title": {
-        "type": "string",
-        "required": true,
-        "example": "design"
-      },
-      "description": {
-        "type": "string",
-        "example": "design description"
-      },
-      "priority": {
-        "type": "string",
-        "required": true,
-        "example": "MEDIUM"
+        "firstName": {
+          "type": "string",
+          "example": "John"
+        },
+        "lastName": {
+          "type": "string",
+          "example": "Doe"
+        },
+        "email": {
+          "type": "string",
+          "example": "john@doe.com"
+        },
+        "phoneNumber": {
+          "type": "string",
+          "example": "+250789437820"
+        },
+        "password": {
+          "type": "string",
+          "example": "Password@32"
+        }
       }
-    }
     },
-    "updatetodo": {
+    "createEmployee": {
       "properties": {
-      "title": {
-        "type": "string",
-        "required": true,
-        "example": "erd"
-      },
-      "description": {
-        "type": "string",
-        "example": "erd description"
-      },
-      "priority": {
-        "type": "string",
-        "required": true,
-        "example": "MEDIUM"
+        "firstName": {
+          "type": "string",
+          "required": true,
+          "example": "John"
+        },
+        "lastName": {
+          "type": "string",
+          "required": true,
+          "example": "Doe"
+        },
+        "email": {
+          "type": "string",
+          "required": true,
+          "example": "john@doe.com"
+        },
+        "phoneNumber": {
+          "type": "string",
+          "required": true,
+          "example": "+250789437820"
+        },
+        "nationalId": {
+          "type": "string",
+          "required": true,
+          "example": "Password@32"
+        },
+        "dateOfBirth": {
+          "type": "string",
+          "required": true,
+          "example": "1999-01-01"
+        },
+        "status": {
+          "type": "string",
+          "required": true,
+          "enum": ["INACTIVE", "ACTIVE"]
+        },
+        "position": {
+          "type": "string",
+          "required": true,
+          "enum": ["DEVELOPER", "DESIGNER", "TESTER", "DEVOPS"]
+        }
       }
-    }
+    },
+    "updateEmployee": {
+      "properties": {
+        "firstName": {
+          "type": "string",
+          "example": "John"
+        },
+        "lastName": {
+          "type": "string",
+          "example": "Doe"
+        },
+        "email": {
+          "type": "string",
+          "example": "john@doe.com"
+        },
+        "phoneNumber": {
+          "type": "string",
+          "example": "+250789437820"
+        },
+        "nationalId": {
+          "type": "string",
+          "example": "Password@32"
+        },
+        "dateOfBirth": {
+          "type": "string",
+          "example": "1999-01-01"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["INACTIVE", "ACTIVE"]
+        },
+        "position": {
+          "type": "string",
+          "enum": ["DEVELOPER", "DESIGNER", "TESTER", "DEVOPS"]
+        }
+      }
+    },
+    "suspend": {
+      "properties": {
+        "status": {
+          "type": "string",
+          "required": true,
+          "enum":["0", "1"]
+        }
+      }
+    },
+    "activateStatus": {
+      "properties": {
+        "status": {
+          "type": "string",
+          "required": true,
+          "enum":["INACTIVE", "ACTIVE"]
+        }
+      }
+    },
+    "SearchTripRequests": {
+      "field": {
+        "type": "string",
+        "required": true,
+        "example": "travelDate"
+      },
+      "search": {
+        "type": "string",
+        "required": true,
+        "example": "2020-01-01"
+      },
+      "limit": {
+        "type": "integer",
+        "required": true,
+        "example": "30"
+      },
+      "offset": {
+        "type": "integer",
+        "required": true,
+        "example": "0"
+      }
+    },
+    "ViewTripsStats": {
+      "startDate": {
+        "type": "date",
+        "required": true,
+        "example": "2020-01-01"
+      },
+      "endDate": {
+        "type": "date",
+        "required": true,
+        "example": "2020-01-08"
+      }
+    },
+    "BookAccommodation": {
+      "arrivalDate": {
+        "type": "date",
+        "required": true,
+        "example": "2020-01-01"
+      },
+      "departureDate": {
+        "type": "date",
+        "required": true,
+        "example": "2020-01-01"
+      },
+      "tripRequestId": {
+        "type": "number",
+        "required": true,
+        "example": 1
+      },
+      "accommodationId": {
+        "type": "number",
+        "required": true,
+        "example": 1
+      }
     }
   },
   "responses": {
@@ -367,7 +784,7 @@
       "properties": {
         "message": {
           "type": "string",
-          "example": "Account created successfully"
+          "example": "You successfully created your account"
         },
         "token": {
           "type": "string",
@@ -379,7 +796,31 @@
       "properties": {
         "error": {
           "type": "string",
-          "example": "Sign up failed! Please try again later"
+          "example": "User with that email already exist"
+        }
+      }
+    },
+    "login-response-real-data": {
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Great! You successfully logged in"
+        }
+      }
+    },
+    "login-response-empty-data": {
+      "properties": {
+        "error": {
+          "type": "string",
+          "example": "empty field"
+        }
+      }
+    },
+    "login-response-wrong-data": {
+      "properties": {
+        "error": {
+          "type": "string",
+          "example": "Email or password is incorrect"
         }
       }
     },
@@ -387,7 +828,7 @@
       "properties": {
         "message": {
           "type": "string",
-          "example": "The email has sent successful"
+          "example": "You can reset password"
         }
       }
     },
@@ -395,7 +836,7 @@
       "properties": {
         "error": {
           "type": "string",
-          "example": "User does not exist"
+          "example": "User with that email not found"
         }
       }
     },
@@ -403,92 +844,123 @@
       "properties": {
         "message": {
           "type": "string",
-          "example": "Your password has been changed, login with new password"
+          "example": "Well done! You have successfully updated your password"
         }
       }
     },
-    "login-definition": {
-      "login-response-real-data": {
-        "properties": {
-          "message": {
-            "type": "string",
-            "example": "successfully logged in"
-          },
-          "token": {
-            "type": "string",
-            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-          }
-        }
-      },
-      "login-response-wrong-data": {
-        "properties": {
-          "message": {
-            "type": "string",
-            "example": "unknown credentials"
-          }
-        }
-      },
-      "login-response-empty-data": {
-        "properties": {
-          "message": {
-            "type": "string",
-            "example": "enter your email or password"
-          }
+    "profileUpdate": {
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Profile updated successfully"
         }
       }
     },
-      "create-todo-success": {
-        "properties": {
-          "message": {
-            "type": "string",
-            "example": "Todo item created successfully"
-          }
+    "confirm": {
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "You successfully confirmed your account"
         }
-      },
-      "getalltodoSuccess": {
-        "properties": {
-          "message": {
-            "type": "string",
-            "example": "All Todo items returned successfully"
-          },
-          "data": {
-            "type": "object",
-            "example": {}
-          }
+      }
+    },
+    "notConfirmed": {
+      "properties": {
+        "error": {
+          "type": "string",
+          "example": "Please Confirm your account"
         }
-      },
-      "gettodoSuccess": {
-        "properties": {
-          "message": {
-            "type": "string",
-            "example": "A Todo item returned successfully"
-          },
-          "data": {
-            "type": "object",
-            "example": {}
-          }
+      }
+    },
+    "tokenNotFound": {
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Token not found"
         }
-      },
-      "updatetodoSuccess": {
-        "properties": {
-          "message": {
-            "type": "string",
-            "example": "Todo item updated successfully"
-          },
-          "data": {
-            "type": "object",
-            "example": {}
-          }
+      }
+    },
+    "tokenInvalid": {
+      "properties": {
+        "error": {
+          "type": "string",
+          "example": "Token is Invalid"
         }
-      },
-      "deletetodoSuccess": {
-        "properties": {
-          "message": {
-            "type": "string",
-            "example": "Todo item deleted successfully"
+      }
+    },
+    "employeesreturnsuccess": {
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "All Employee returned successfully"
+        }
+      }
+    },
+    "employeeSearchreturnSuccess": {
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "All searched Employee returned successfully"
+        }
+      }
+    },
+    "employeereturnSuccess": {
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "A Employee returned successfully"
+        }
+      }
+    },
+    "employeeCreateSuccess": {
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Employee created successfully"
+        }
+      }
+    },
+    "employeeUpdateSuccess": {
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Employee updated successfully"
+        }
+      }
+    },
+    "employeeStatusSuccess": {
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Employee activation done successfully"
+        }
+      }
+    },
+    "employeeSuspensionSuccess": {
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Employee Suspension done successfully"
+        }
+      }
+    },
+    "employeeDeleteSuccess": {
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Employee deleted successfully"
+        }
+      }
+    },
+    "trip-request-update": {
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": {
+          "message":"The request is updated successfully"
           }
         }
       }
-    
+    }
   }
 }

@@ -42,7 +42,6 @@ describe('employee', () => {
                 if (err) done(err);
                 
                 expect(res.status).to.equal(created);
-                // expect(res.body).to.be.an('object').to.have.property('message').to.be.a('string').to.equal(userSignupSuccess);
                 done();
             })
         })
@@ -53,7 +52,6 @@ describe('employee', () => {
             .end((err, res) => {
                 if (err) done(err);
                 expect(res.status).to.equal(ok);
-                // expect(res.body).to.be.an('object').to.have.property('error').to.be.a('string');
                 done();
             })
         })
@@ -67,8 +65,6 @@ describe('employee', () => {
                 const {token} = res.body
                 resToken = `Bearer ${token}`
                 expect(res.status).to.equal(ok);
-                // expect(res.body).to.be.an('object').to.have.property('message').to.be.a('string').to.equal(loginsuccess);
-                // expect(res.body).to.be.an('object').to.have.property('token')
                 done();
             })
         })
@@ -86,7 +82,6 @@ describe('employee', () => {
                 const {data} = res.body;
                 employeeId = data.id
                 expect(res.status).to.equal(created);
-                // expect(res.body).to.be.an('object').to.have.property('message').to.be.a('string').to.equal(employeeItemCreateSuccess);
                 done();
             })
         })
@@ -100,18 +95,12 @@ describe('employee', () => {
             .end((err, res) => {
                 if (err) done(err);
                 expect(res.status).to.equal(statusCodes.conflict);
-                // expect(res.body).to.be.an('object').to.have.property('message').to.be.a('string').to.equal(employeeItemCreateSuccess);
                 done();
             })
         })
     });
 
     describe('/GET employee', () => {
-        // before('Insert employee in db', async () => {
-        //     result = await sequelize.query(`INSERT INTO employees ("title", "description", "priority")
-        //     VALUES ('title 1', 'item description 1', 'MEDIUM')
-        //     RETURNING uuid`)
-        //   });
         it('should GET all employee items', (done) => {
             chai
             .request(server)
@@ -120,8 +109,6 @@ describe('employee', () => {
             .end((err, res) => {
                 if (err) done(err);
                 expect(res.status).to.equal(ok);
-                // expect(res.body).to.be.an('object').to.have.property('data').to.have.property('items').to.be.an('array');
-                // expect(res.body).to.be.an('object').to.have.property('message').to.be.a('string').to.equal(employeeItemsreturnSuccess);
                 done();
             })
         })
@@ -134,8 +121,6 @@ describe('employee', () => {
             .end((err, res) => {
                 if (err) done(err);
                 expect(res.status).to.equal(ok);
-                // expect(res.body).to.be.an('object').to.have.property('data').to.be.an('object');
-                // expect(res.body).to.be.an('object').to.have.property('message').to.be.a('string').to.equal(employeeItemreturnSuccess);
                 done();
             })
         })
@@ -148,8 +133,6 @@ describe('employee', () => {
             .end((err, res) => {
                 if (err) done(err);
                 expect(res.status).to.equal(ok);
-                // expect(res.body).to.be.an('object').to.have.property('data').to.be.an('object');
-                // expect(res.body).to.be.an('object').to.have.property('message').to.be.a('string').to.equal(employeeItemreturnSuccess);
                 done();
             })
         })
@@ -161,8 +144,6 @@ describe('employee', () => {
             .end((err, res) => {
                 if (err) done(err);
                 expect(res.status).to.equal(ok);
-                // expect(res.body).to.be.an('object').to.have.property('data').to.be.an('object');
-                // expect(res.body).to.be.an('object').to.have.property('message').to.be.a('string').to.equal(employeeItemreturnSuccess);
                 done();
             })
         })
@@ -178,8 +159,6 @@ describe('employee', () => {
             .end((err, res) => {
                 if (err) done(err);
                 expect(res.status).to.equal(ok);
-                // expect(res.body).to.be.an('object').to.have.property('data').to.be.an('object');
-                // expect(res.body).to.be.an('object').to.have.property('message').to.be.a('string').to.equal(employeeItemUpdateSuccess);
                 done();
             })
         })
@@ -193,8 +172,6 @@ describe('employee', () => {
             .end((err, res) => {
                 if (err) done(err);
                 expect(res.status).to.equal(ok);
-                // expect(res.body).to.be.an('object').to.have.property('data').to.be.an('object');
-                // expect(res.body).to.be.an('object').to.have.property('message').to.be.a('string').to.equal(employeeItemUpdateSuccess);
                 done();
             })
         })
@@ -208,8 +185,6 @@ describe('employee', () => {
             .end((err, res) => {
                 if (err) done(err);
                 expect(res.status).to.equal(ok);
-                // expect(res.body).to.be.an('object').to.have.property('data').to.be.an('object');
-                // expect(res.body).to.be.an('object').to.have.property('message').to.be.a('string').to.equal(employeeItemUpdateSuccess);
                 done();
             })
         })
@@ -225,7 +200,6 @@ describe('employee', () => {
             .end((err, res) => {
                 if (err) done(err);
                 expect(res.status).to.equal(ok);
-                // expect(res.body).to.be.an('object').to.have.property('message').to.be.a('string').to.equal(employeeItemDeleteSuccess);
                 done();
             })
         })
@@ -242,7 +216,6 @@ describe('employee', () => {
             .end((err, res) => {
                 if (err) done(err);
                 expect(res.status).to.equal(created);
-                // expect(res.body).to.be.an('object').to.have.property('message').to.be.a('string').to.equal(employeeItemCreateSuccess);
                 done();
             })
         })

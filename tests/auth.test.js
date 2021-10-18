@@ -35,7 +35,6 @@ let resToken;
                 if (err) done(err);
                 
                 expect(res.status).to.equal(created);
-                // expect(res.body).to.be.an('object').to.have.property('message').to.be.a('string').to.equal(userSignupSuccess);
                 done();
             })
         })
@@ -47,7 +46,6 @@ let resToken;
             .end((err, res) => {
                 if (err) done(err);
                 expect(res.status).to.equal(badRequest);
-                // expect(res.body).to.be.an('object').to.have.property('error').to.be.a('string');
                 done();
             })
         })
@@ -61,7 +59,6 @@ let resToken;
                 console.log(err)
                 if (err) done(err);
                 expect(res.status).to.equal(conflict);
-                // expect(res.body).to.be.an('object').to.have.property('error').to.be.a('string').to.be.equal(userExist);
                 done();
             })
         })
@@ -77,7 +74,6 @@ let resToken;
             .end((err, res) => {
                 if (err) done(err);
                 expect(res.status).to.equal(unAuthorized);
-                // expect(res.body).to.be.an('object').to.have.property('error').to.be.a('string');
                 done();
             })
         })
@@ -88,7 +84,6 @@ let resToken;
             .end((err, res) => {
                 if (err) done(err);
                 expect(res.status).to.equal(ok);
-                // expect(res.body).to.be.an('object').to.have.property('error').to.be.a('string');
                 done();
             })
         })
@@ -103,7 +98,6 @@ let resToken;
             .end((err, res) => {
                 if (err) done(err);
                 expect(res.status).to.equal(badRequest);
-                // expect(res.body).to.be.an('object').to.have.property('error').to.be.a('string');
                 done();
             })
         })
@@ -116,7 +110,6 @@ let resToken;
             .end((err, res) => {
                 if (err) done(err);
                 expect(res.status).to.equal(unAuthorized);
-                // expect(res.body).to.be.an('object').to.have.property('error').to.be.a('string').to.equal(loginfailed);
                 done();
             })
         })
@@ -131,8 +124,6 @@ let resToken;
                 const {token} = res.body
                 resToken = `Bearer ${token}`
                 expect(res.status).to.equal(ok);
-                // expect(res.body).to.be.an('object').to.have.property('message').to.be.a('string').to.equal(loginsuccess);
-                // expect(res.body).to.be.an('object').to.have.property('token')
                 done();
             })
         })
@@ -147,7 +138,6 @@ let resToken;
             .end((err, res) => {
                 if (err) done(err);
                 expect(res.status).to.equal(badRequest);
-                // expect(res.body).to.be.an('object').to.have.property('error').to.be.a('string');
                 done();
             })
         })
@@ -160,7 +150,6 @@ let resToken;
             .end((err, res) => {
                 if (err) done(err);
                 expect(res.status).to.equal(forbidden);
-                // expect(res.body).to.be.an('object').to.have.property('error').to.be.a('string').to.equal(resetIncorrectEmailError);
                 done();
             })
         })
@@ -174,8 +163,6 @@ let resToken;
                 if (err) done(err);
                 const { token } = res.body;
                 expect(res.status).to.equal(ok);
-                // expect(res.body).to.be.an('object').to.have.property('message').to.be.a('string').to.equal(resetsuccess);
-                // expect(res.body).to.be.an('object').to.have.property('token')
                 resetToken = token
                 done();
             })
@@ -192,7 +179,6 @@ let resToken;
             .end((err, res) => {
                 if (err) done(err);
                 expect(res.status).to.equal(badRequest);
-                // expect(res.body).to.be.an('object').to.have.property('error').to.be.a('string');
                 done();
             })
         })
@@ -205,7 +191,6 @@ let resToken;
             .end((err, res) => {
                 if (err) done(err);
                 expect(res.status).to.equal(ok);
-                // expect(res.body).to.be.an('object').to.have.property('message').to.be.a('string').to.equal(updatePasswordsuccess);
                 done();
             })
         })
@@ -219,7 +204,6 @@ let resToken;
             .end((err, res) => {
                 if (err) done(err);
                 expect(res.status).to.equal(ok);
-                // expect(res.body).to.be.an('object').to.have.property('message').to.be.a('string').to.equal(updatePasswordsuccess);
                 done();
             })
         })
@@ -234,7 +218,6 @@ let resToken;
             .end((err, res) => {
                 if (err) done(err);
                 expect(res.status).to.equal(ok);
-                // expect(res.body).to.be.an('object').to.have.property('message').to.be.a('string').to.equal(updatePasswordsuccess);
                 done();
             })
         })
@@ -248,7 +231,6 @@ let resToken;
             .end((err, res) => {
                 if (err) done(err);
                 expect(res.status).to.equal(notFound);
-                // expect(res.body).to.be.an('object').to.have.property('message').to.be.a('string').to.equal(updatePasswordsuccess);
                 done();
             })
         })
@@ -262,7 +244,6 @@ let resToken;
             .end((err, res) => {
                 if (err) done(err);
                 expect(res.status).to.equal(notFound);
-                // expect(res.body).to.be.an('object').to.have.property('message').to.be.a('string').to.equal(updatePasswordsuccess);
                 done();
             })
         })
@@ -277,7 +258,6 @@ let resToken;
             .end((err, res) => {
                 if (err) done(err);
                 expect(res.status).to.equal(unAuthorized);
-                // expect(res.body).to.be.an('object').to.have.property('message').to.be.a('string').to.equal(updatePasswordsuccess);
                 done();
             })
         })

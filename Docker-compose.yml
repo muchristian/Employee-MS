@@ -24,4 +24,3 @@ services:
       POSTGRES_USER: "postgres"
       POSTGRES_DB: "employeems"
       DB_HOST: 127.0.0.1
-      SENDGRID_API_KEY: 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

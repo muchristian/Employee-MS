@@ -1,10 +1,9 @@
-import sendGridMail from '@sendgrid/mail';
 import * as response from '../response';
 import statusCodes from '../statusCodes';
 import * as messages from '../customMessages';
+import transport from './config';
 
 const { employeeCreateSuccess } = messages
-sendGridMail.setApiKey(process.env.SENDGRID_API_KEY);
 const {successResponse, errorResponse} = response;
 
 function employeeRegistrationConfirmationEmailHtml(employeeName) {
@@ -21,24 +20,23 @@ function getMessage(emailParams) {
 }
 
 async function sendEmployeeRegistrationConfirmationEmail(res, result) {
-  try {
-      console.log(result)
-    await sendGridMail.send(getMessage(result));
-    return successResponse(res, statusCodes.created, employeeCreateSuccess, result, undefined);
-  } catch (error) {
-      console.log(error)
-    return errorResponse(res, statusCodes.badRequest, error);
-  }
+  transport.sendMail(getMessage(result), function(err, info) {
+    if (err) {
+      console.log(err)
+    } else {
+      return successResponse(res, statusCodes.created, employeeCreateSuccess, result, token)
+    }
+});
 }
 
 async function sendMultiEmployeesRegistrationConfirmationEmail(res, result) {
-  try {
-      console.log(result)
-    await sendGridMail.send(getMessage(result));
-  } catch (error) {
-      console.log(error)
-    return errorResponse(res, statusCodes.badRequest, error);
-  }
+  transport.sendMail(getMessage(result), function(err, info) {
+    if (err) {
+      console.log(err)
+    } else {
+      return successResponse(res, statusCodes.created, employeeCreateSuccess, result, token)
+    }
+});
 }
 
 export {sendEmployeeRegistrationConfirmationEmail, sendMultiEmployeesRegistrationConfirmationEmail};

@@ -1,11 +1,10 @@
-import sendGridMail from '@sendgrid/mail';
 import * as response from '../response';
 import statusCodes from '../statusCodes';
 import * as messages from '../customMessages';
-require('dotenv').config();
+import transport from './config';
 
 const { userSignupSuccess } = messages
-sendGridMail.setApiKey(process.env.SENDGRID_API_KEY);
+console.log(process.env.SENDGRID_API_KEY)
 const {successResponse, errorResponse} = response;
 
 function userRegistrationConfirmationEmailHtml(userName, url) {
@@ -22,14 +21,13 @@ function getMessage(emailParams, url) {
 }
 
 async function sendUserRegistrationConfirmationEmail(res, result, url, token) {
-  try {
-      console.log(result)
-    await sendGridMail.send(getMessage(result, url));
-    return successResponse(res, statusCodes.created, userSignupSuccess, result, token)
-  } catch (error) {
-    console.log(error)
-    return errorResponse(res, statusCodes.badRequest, error);
-  }
+  transport.sendMail(getMessage(result, url), function(err, info) {
+    if (err) {
+      console.log(err)
+    } else {
+      return successResponse(res, statusCodes.created, userSignupSuccess, result, token)
+    }
+});
 }
 
 export default sendUserRegistrationConfirmationEmail;
